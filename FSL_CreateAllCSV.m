@@ -1,4 +1,4 @@
-function [outTable] = FSL_ITKsnapCSVimport(cName)
+function [] = FSL_CreateAllCSV()
 
 % Location
 
@@ -25,7 +25,7 @@ for ci = 1:length(csvDirA)
         'Hippocamp';'Amygdala';'Accumbens';'Thalamus';...
         'Caudate';'Putamen';'Pallidum';'Hippocamp';'Amygdala';'Accumbens'};
     
-    hemiID = {'L';'L';'L';'L';'B','L';'L';'L';'R';...
+    hemiID = {'L';'L';'L';'L';'B';'L';'L';'L';'R';...
         'R';'R';'R';'R';'R';'R'};
     
     labelColor = [[210 180 140] ; [102 205 170] ; [0 0 128] ; [0 139 139] ;...
@@ -39,6 +39,7 @@ for ci = 1:length(csvDirA)
     
     if isequal(labelNum , tmpTable.LabelId)
         tmpTable.LabelName = labelID;
+        tmpTable.HemiN = hemiID;
     else
         for labelI = 1:length(labelNum)
             tLabel = labelNum(labelI);
@@ -73,11 +74,11 @@ for ci = 1:length(csvDirA)
     
     
     
-    allFslTab = [allFslTab ; tmpTable];
+    allFslTab = [allFslTab ; tmpTable]; %#ok<AGROW>
     
 end
 
-
+cd('Z:\BRAiN_Project\FinalSummaryNIfile');
 % Subcortical Cortical
 save('AllFSLdata.mat','allFslTab');
 writetable(allFslTab,'AllFSLdata.csv')
