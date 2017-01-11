@@ -3,6 +3,11 @@ function [] = FSL_CreateAllCSV()
 % Location
 
 mainVolLoc = 'Z:\BRAiN_Project\Freesurfer stat text files\FSL_VolumeCSV';
+subTabLoc = 'Z:\BRAiN_Project\Freesurfer stat text files\';
+
+cd(subTabLoc)
+
+subTab = readtable('all_sub_data.csv');
 
 cd(mainVolLoc)
 
@@ -53,11 +58,11 @@ for ci = 1:length(csvDirA)
     
     tmpTable.Properties.VariableNames([3 4 5 6]) = {'NVoxels' , 'Volume_mm3' , 'IMmean' , 'IMstddev'};
     
-    PDcases = {'c202','c204','c205','c212','c213','c215','c216','c218','c223',...
-        'c225','c227','c228','c232','c233','c235','c237','c246','c252',...
-        'c254','c256','c260','c267','c290','c294','c296'};
+    pdCases = subTab.f_surg_n(ismember(subTab.cond,'PD'));
+    PDcases = arrayfun(@(x) {['c',num2str(x)]}, pdCases);
     
-    ETcases = {'c229','c241','c249','c250','c270','c277','c286','c307','c318'};
+    etCases = subTab.f_surg_n(ismember(subTab.cond,'ET'));
+    ETcases = arrayfun(@(x) {['c',num2str(x)]}, etCases);
     
     if ismember(tcName,PDcases)
         tmpTable.Condition = cellstr(repmat('PD',height(tmpTable),1));
