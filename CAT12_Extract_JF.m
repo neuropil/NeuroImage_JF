@@ -6,12 +6,12 @@ function [] = CAT12_Extract_JF()
 
 
 
-allFsLoc = 'Z:\Yilma_Project\Case_Data';
+allFsLoc = 'Z:\BRAiN_Project\REdoCAT12';
 cd(allFsLoc);
 
 dirFolds = dir;
 dirFolds2 = {dirFolds.name};
-dirFoldsA = dirFolds2(4:end);
+dirFoldsA = dirFolds2(3:end);
 
 
 allTable = table;
@@ -25,21 +25,21 @@ presC = 1;
 
 for di = 1:length(dirFoldsA)
     
-    cd([allFsLoc, '\', char(dirFoldsA{di}) , '\NIFTI'])
-    fSetdirs = dir;
-    fdirsTemp = [fSetdirs(:).isdir];
-    fdirNames = {fSetdirs(fdirsTemp).name};
-    fdirNames(ismember(fdirNames,{'.','..','incoming','NIFTI','Freesurfer'})) = [];
+%     cd([allFsLoc, '\', char(dirFoldsA{di}) , '\NIFTI'])
+%     fSetdirs = dir;
+%     fdirsTemp = [fSetdirs(:).isdir];
+%     fdirNames = {fSetdirs(fdirsTemp).name};
+%     fdirNames(ismember(fdirNames,{'.','..','incoming','NIFTI','Freesurfer'})) = [];
+%     
+%     fdirInd = contains(fdirNames,'3D') & contains(fdirNames,'T1');
+%     
+%     if sum(fdirInd) == 0
+%         continue
+%     end
     
-    fdirInd = contains(fdirNames,'3D') & contains(fdirNames,'T1');
+%     fdirName2use = fdirNames{fdirInd};
     
-    if sum(fdirInd) == 0
-        continue
-    end
-    
-    fdirName2use = fdirNames{fdirInd};
-    
-    reportLoc = [allFsLoc, '\', char(dirFoldsA{di}) , '\NIFTI\' , fdirName2use '\report'];
+    reportLoc = [allFsLoc, '\', char(dirFoldsA{di}) , '\NIFTI\t1\report'];
 
     if ~exist(reportLoc,'dir')
         continue
@@ -88,7 +88,7 @@ end
 
 
 % Save Data
-cd('Z:\Yilma_Project\CompiledCSVdata')
+cd('Z:\BRAiN_Project\FinalSummaryNIfile')
 
 save('CAT12_All.mat','allTable','allmeasures');
 
