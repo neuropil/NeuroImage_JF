@@ -1,31 +1,32 @@
-function [] = CERES_CSV_compile()
+function [] = CERES_CSV_compile_ET()
 
 
 % First loop
 
-fmainLoc = 'Z:\BRAiN_Project\MRI_Data_Cases';
+fmainLoc = 'X:\EssentialTremor_GrantData\OASIS_DATA\ET_Controls\caseDATA';
 
 cd(fmainLoc)
 
 fdir1 = dir;
 fdir2 = {fdir1.name};
-fdir3 = fdir2(4:end);
+fdir3 = fdir2(~ismember(fdir2,{'.','..'}));
 
-fdir4 = fdir3(cellfun(@(x) ~isempty(strfind(x,'Case')), fdir3, 'UniformOutput',true));
-
-for i = 1:length(fdir4)
+for i = 1:length(fdir3)
     
-    tmpD = [fmainLoc,'\',fdir4{i},'\CERES'];
+    tmpD = [fmainLoc,'\',fdir3{i},'\CERES_2'];
+    
+    if ~exist(tmpD,'dir')
+        continue
+    end
     
     cd(tmpD);
-    
-    nameParts = strsplit(fdir4{i},'_');
 
-    newName = ['c',nameParts{2},'.csv'];
+    oldName = ['etctl_c',fdir3{i},'.csv'];
+    newName = ['cc',fdir3{i},'.csv'];
     
-    newNloc = ['Z:\BRAiN_Project\Freesurfer stat text files\CERES_CSVfiles\',newName];   
+    newNloc = ['X:\EssentialTremor_GrantData\CeresCSVfiles\',newName];   
     
-    copyfile([tmpD , '\', newName], newNloc);
+    copyfile([tmpD , '\', oldName], newNloc);
     
 end
 
@@ -36,13 +37,13 @@ end
 % Second loop
 
 
-smainLoc = 'Z:\BRAiN_Project\MRI_Data_Cases\DTI_Subjects';
+smainLoc = 'X:\EssentialTremor_GrantData\ET_ExperimentalDATA';
 
 cd(smainLoc)
 
 sdir1 = dir;
 sdir2 = {sdir1.name};
-sdir3 = sdir2(4:end);
+sdir3 = sdir2(~ismember(fdir2,{'.','..'}));
 
 
 for ii = 1:length(sdir3)
@@ -55,7 +56,7 @@ for ii = 1:length(sdir3)
     
     newName = ['c',nameParts{2},'.csv'];
     
-    newNloc = ['Z:\BRAiN_Project\Freesurfer stat text files\CERES_CSVfiles\',newName];
+    newNloc = ['X:\EssentialTremor_GrantData\CeresCSVfiles\',newName];
     
     copyfile([tmpS , '\', newName], newNloc);
     
